@@ -5,6 +5,8 @@ import {
     IsString,
     Matches,
     MinLength,
+    IsEnum,
+    
 } from 'class-validator';
 
 const passwordRegEx =
@@ -19,6 +21,10 @@ export class CreateUserDto {
     @IsEmail()
     @IsNotEmpty()
     email: string;
+
+    @IsEnum(['User', 'Admin'])
+    @IsNotEmpty()
+    roles: string[];
 
     @IsString()
     @Matches(passwordRegEx, {

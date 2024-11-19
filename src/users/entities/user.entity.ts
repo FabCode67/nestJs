@@ -16,6 +16,9 @@ export class User {
     @Column()
     password: string;
 
+    @Column({ type: 'simple-array', default: 'User' }) 
+    roles: string[];
+
     @OneToMany(() => Blog, blog => blog.author)
     blogs: Blog[];
 
