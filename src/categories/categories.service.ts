@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,17 +11,19 @@ import { Category } from './entities/category.entity';
 
 @Injectable()
 export class CategoriesService {
-
   constructor(
-    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
-  ) { }
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
+  ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const existingCategory = await this.categoryRepository.findOne({
       where: { name: CreateCategoryDto.name },
-    })
+    });
 
-    if (existingCategory) {throw new BadRequestException(`Category already in use`);}
+    if (existingCategory) {
+      throw new BadRequestException(`Category already in use`);
+    }
 
     const category = this.categoryRepository.create(createCategoryDto);
 
@@ -29,13 +35,13 @@ export class CategoriesService {
   }
 
   findOne(id: string) {
-    const existingCategory = this.categoryRepository.findOneBy({ id })
+    const existingCategory = this.categoryRepository.findOneBy({ id });
     if (!existingCategory) throw new NotFoundException('Category not found.');
     return this.categoryRepository.findOneBy({ id });
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    const existingCategory = this.categoryRepository.findOneBy({ id })
+    const existingCategory = this.categoryRepository.findOneBy({ id });
     if (!existingCategory) throw new NotFoundException('Category not found.');
     const category = await this.categoryRepository.preload({
       id,
@@ -48,7 +54,7 @@ export class CategoriesService {
   }
 
   remove(id: string) {
-    const existingCategory = this.categoryRepository.findOneBy({ id })
+    const existingCategory = this.categoryRepository.findOneBy({ id });
     if (!existingCategory) throw new NotFoundException('Category not found.');
     return this.categoryRepository.delete({ id });
   }

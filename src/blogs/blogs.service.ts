@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,16 +13,18 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class BlogsService {
-
   constructor(
     @InjectRepository(Blog) private readonly blogRepository: Repository<Blog>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
   async create(createBlogDto: CreateBlogDto): Promise<Blog> {
     const { authorId, categoryIds, title, content } = createBlogDto;
-    const author = await this.userRepository.findOne({ where: { id: authorId } });
+    const author = await this.userRepository.findOne({
+      where: { id: authorId },
+    });
 
     if (!author) {
       throw new NotFoundException(`User with ID ${authorId} not found`);
@@ -38,11 +44,9 @@ export class BlogsService {
     });
 
     return this.blogRepository.save(blog);
-
   }
 
   async likeBlog(userId: string, blogId: string): Promise<Blog> {
-
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!user) {
@@ -68,11 +72,9 @@ export class BlogsService {
     blog.likesCount += 1;
 
     return this.blogRepository.save(blog);
-
   }
 
   async unlikeBlog(userId: string, blogId: string): Promise<Blog> {
-
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (!user) {
@@ -105,14 +107,14 @@ export class BlogsService {
   }
 
   async findOne(id: string) {
-    const existingBlog = await this.blogRepository.findOneBy({ id })
-    if(!existingBlog) throw new BadRequestException('blog not found');
+    const existingBlog = await this.blogRepository.findOneBy({ id });
+    if (!existingBlog) throw new BadRequestException('blog not found');
     return this.blogRepository.findOneBy({ id });
   }
 
   async update(id: string, updateBlogDto: UpdateBlogDto) {
-    const existingBlog = await this.blogRepository.findOneBy({ id })
-    if(!existingBlog) throw new BadRequestException('blog not found');
+    const existingBlog = await this.blogRepository.findOneBy({ id });
+    if (!existingBlog) throw new BadRequestException('blog not found');
     const blog = await this.blogRepository.preload({
       id,
       ...updateBlogDto,
@@ -126,8 +128,8 @@ export class BlogsService {
   }
 
   async remove(id: string) {
-    const existingBlog = await this.blogRepository.findOneBy({ id })
-    if(!existingBlog) throw new BadRequestException('blog not found');
+    const existingBlog = await this.blogRepository.findOneBy({ id });
+    if (!existingBlog) throw new BadRequestException('blog not found');
     return this.blogRepository.delete({ id });
   }
 }
