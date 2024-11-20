@@ -1,36 +1,42 @@
-import { Blog } from "src/blogs/entities/blog.entity";
-import { Comment } from "src/comments/entities/comment.entity";
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Blog } from 'src/blogs/entities/blog.entity';
+import { Comment } from 'src/comments/entities/comment.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    fullName: string;
-    
-    @Column()
-    email: string;
+  @Column()
+  fullName: string;
 
-    @Column()
-    password: string;
+  @Column()
+  email: string;
 
-    @Column({ type: 'simple-array', default: 'User' }) 
-    roles: string[];
+  @Column()
+  password: string;
 
-    @OneToMany(() => Blog, blog => blog.author)
-    blogs: Blog[];
+  @Column({ type: 'simple-array', default: 'User' })
+  roles: string[];
 
-    @ManyToMany(() => Blog, blog => blog.likedBy)
-    @JoinTable()
-    likedBlogs: Blog[];
+  @OneToMany(() => Blog, (blog) => blog.author)
+  blogs: Blog[];
 
-    @ManyToMany(() => Blog, user => user.bookmarkedBy)
-    @JoinTable()
-    bookmarkedBlogs: Blog[];
+  @ManyToMany(() => Blog, (blog) => blog.likedBy)
+  @JoinTable()
+  likedBlogs: Blog[];
 
-    @OneToMany(() => Comment, comment => comment.author)
-    comments: Comment[];
+  @ManyToMany(() => Blog, (user) => user.bookmarkedBy)
+  @JoinTable()
+  bookmarkedBlogs: Blog[];
 
+  @OneToMany(() => Comment, (comment) => comment.author)
+  comments: Comment[];
 }

@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USER ?? 'postgres',
       password: process.env.POSTGRES_PASSWORD ?? '123',
       database: process.env.POSTGRES_DB ?? 'nestdbblog',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], 
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
     }),

@@ -8,7 +8,7 @@ import { jwtConstants } from './constants';
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
-  imports:[
+  imports: [
     UsersModule,
     JwtModule.register({
       global: true,
