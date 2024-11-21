@@ -7,8 +7,8 @@ import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
-import { User } from 'src/users/entities/user.entity';
-import { Category } from 'src/categories/entities/category.entity';
+import { User } from '../users/entities/user.entity';
+import { Category } from '../categories/entities/category.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
