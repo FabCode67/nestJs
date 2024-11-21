@@ -1,5 +1,5 @@
-import { Blog } from 'src/blogs/entities/blog.entity';
-import { Comment } from 'src/comments/entities/comment.entity';
+// import { Blog } from 'src/blogs/entities/blog.entity';
+// import { Comment } from 'src/comments/entities/comment.entity';
 import {
   Column,
   Entity,
@@ -26,17 +26,17 @@ export class User {
   @Column({ type: 'simple-array', default: 'User' })
   roles: string[];
 
-  @OneToMany(() => Blog, (blog) => blog.author)
-  blogs: Blog[];
+//   @OneToMany(() => Blog, (blog) => blog.author)
+//   blogs: Blog[];
 
-  @ManyToMany(() => Blog, (blog) => blog.likedBy)
-  @JoinTable()
-  likedBlogs: Blog[];
+//   @ManyToMany(() => Blog, (blog) => blog.likedBy)
+//   @JoinTable()
+//   likedBlogs: Blog[];
 
-  @ManyToMany(() => Blog, (user) => user.bookmarkedBy)
-  @JoinTable()
-  bookmarkedBlogs: Blog[];
+//   @ManyToMany(() => Blog, (user) => user.bookmarkedBy)
+//   @JoinTable()
+//   bookmarkedBlogs: Blog[];
 
-  @OneToMany(() => Comment, (comment) => comment.author)
-  comments: Comment[];
+//   @OneToMany(() => Comment, (comment) => comment.author)
+//   comments: Comment[];
 }
