@@ -1,5 +1,5 @@
-import { Blog } from 'src/blogs/entities/blog.entity';
-import { Comment } from 'src/comments/entities/comment.entity';
+import { Blog } from '../../blogs/entities/blog.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 import {
   Column,
   Entity,
