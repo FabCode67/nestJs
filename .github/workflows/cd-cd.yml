@@ -93,7 +93,7 @@ jobs:
     steps:
       - name: Deploy to production
         run: |
-          echo "Add your deployment commands here"
+          echo "Deploying to production..."
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
