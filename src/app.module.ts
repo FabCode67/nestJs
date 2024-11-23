@@ -8,15 +8,17 @@ import { CommentsModule } from './comments/comments.module';
 import { CategoriesModule } from './categories/categories.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
-        TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.NODE_ENV === 'test' ? 'localhost' : process.env.DB_HOST ?? 'db',
+      host:
+        process.env.NODE_ENV === 'test'
+          ? 'localhost'
+          : (process.env.DB_HOST ?? 'db'),
       port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
       username: process.env.POSTGRES_USER ?? 'postgres',
       password: process.env.POSTGRES_PASSWORD ?? '123',

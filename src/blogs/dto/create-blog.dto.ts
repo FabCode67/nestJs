@@ -15,10 +15,6 @@ export class CreateBlogDto {
   @IsNotEmpty()
   content: string;
 
-  @IsUUID()
-  @IsNotEmpty()
-  authorId: string;
-
   @IsArray()
   @ArrayNotEmpty()
   @IsUUID('all', { each: true })
