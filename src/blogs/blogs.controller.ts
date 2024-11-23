@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { Blog } from './entities/blog.entity';
 
 @Controller('blogs')
 export class BlogsController {
@@ -19,8 +21,9 @@ export class BlogsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogsService.create(createBlogDto);
+  create(@Body() createBlogDto: CreateBlogDto, @Req() req): Promise<Blog> {
+    const authorId = req.user.id;
+    return this.blogsService.create(createBlogDto, authorId);
   }
 
   @UseGuards(AuthGuard)
@@ -31,14 +34,30 @@ export class BlogsController {
 
   @UseGuards(AuthGuard)
   @Patch(':id/like')
-  likeBlog(@Param('id') blogId: string, @Body('userId') userId: string) {
+  likeBlog(@Param('id') blogId: string, @Req() req): Promise<Blog> {
+    const userId = req.user.id;
     return this.blogsService.likeBlog(userId, blogId);
   }
 
   @UseGuards(AuthGuard)
   @Patch(':id/unlike')
-  unlikeBlog(@Param('id') blogId: string, @Body('userId') userId: string) {
+  unlikeBlog(@Param('id') blogId: string, @Req() req): Promise<Blog> {
+    const userId = req.user.id;
     return this.blogsService.unlikeBlog(userId, blogId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch(':id/bookmark')
+  bookmarkBlog(@Param('id') blogId: string, @Req() req): Promise<Blog> {
+    const userId = req.user.id;
+    return this.blogsService.bookmarkBlog(userId, blogId);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch(':id/unbookmark')
+  unbookmarkBlog(@Param('id') blogId: string, @Req() req): Promise<Blog> {
+    const userId = req.user.id;
+    return this.blogsService.unbookmarkBlog(userId, blogId);
   }
 
   @UseGuards(AuthGuard)
@@ -49,8 +68,13 @@ export class BlogsController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogsService.update(id, updateBlogDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateBlogDto: UpdateBlogDto,
+    @Req() req,
+  ): Promise<Blog> {
+    const authorId = req.user.id;
+    return this.blogsService.update(id, updateBlogDto, authorId);
   }
 
   @UseGuards(AuthGuard)
